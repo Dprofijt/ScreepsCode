@@ -14,10 +14,10 @@ export class Main {
         }
 
         creepCreater.run();
-        console.log('Creeps: ' + Object.keys(Game.creeps).length);
+        // console.log('Creeps: ' + Object.keys(Game.creeps).length);
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
-            console.log('Creep ' + name + ' Role: ' + creep.memory.role);
+            // console.log('Creep ' + name + ' Role: ' + creep.memory.role);
             if (creep.memory.role === "harvester") {
                 roleHarvester.run(creep);
             }

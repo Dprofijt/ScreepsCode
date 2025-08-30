@@ -13,7 +13,7 @@ export const creepCreater = {
         );
         // console.log('Harvesters: ' + harvesters.length);
 
-        if(harvesters.length < 2) {
+        if(harvesters.length < 4) {
             var energySource1Harvesters = harvesters.filter(
                 (creep) => creep.memory.targetId === 'source1'
             );
@@ -21,8 +21,8 @@ export const creepCreater = {
                 (creep) => creep.memory.targetId === 'source2'
             );
             
-            if(energySource1Harvesters.length <= energySource2Harvesters.length) {
-                Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source1' } });
+            if(energySource1Harvesters.length <= (energySource2Harvesters.length -2)) {
+                Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source1' } });
             } else {
                 Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' } });
             }
@@ -33,8 +33,8 @@ export const creepCreater = {
         if(upgraders.length < 1) {
             Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Upgrader' + Game.time, { memory: { role: 'upgrader' } });
         }
-        if(builders.length < 1) {
-            Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Builder' + Game.time, { memory: { role: 'builder' } });
+        if(builders.length < 3) {
+            Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, MOVE], 'Builder' + Game.time, { memory: { role: 'builder' } });
         }
     }
 }

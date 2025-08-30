@@ -16,8 +16,14 @@ export const roleUpgrader = {
       // if (sources.length > 0 && creep.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
       //   creep.moveTo(sources[0], { visualizePathStyle: { stroke: '#ffaa00' } });
       // }
-      if (creep.withdraw(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(spawn, { visualizePathStyle: { stroke: '#ffaa00' } });
+      if(spawn.store[RESOURCE_ENERGY] > 300) {
+        if (creep.withdraw(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(spawn, { visualizePathStyle: { stroke: '#ffaa00' } });
+        }
+      } else {
+        if (sources.length > 0 && creep.harvest(sources[1]) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(sources[1], { visualizePathStyle: { stroke: '#ffaa00' } });
+        }
       }
     } else if(creep.memory.working) {
       if (creep.upgradeController(creep.room.controller!) === ERR_NOT_IN_RANGE) {
