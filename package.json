@@ -1,0 +1,19 @@
+{
+  "name": "screeps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc --watch",
+    "build": "npx tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/screeps": "^3.3.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "keywords": []
+}
