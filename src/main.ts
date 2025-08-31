@@ -2,6 +2,7 @@ import { roleHarvester } from "./role.harvester";
 import { roleUpgrader } from "./role.upgrader";
 import { roleBuilder } from "./role.builder";
 import { creepCreater } from "./createCreeps";
+import { roleMover } from "./role.mover";
 
 export class Main {
     public loop(){
@@ -26,6 +27,9 @@ export class Main {
             }
             if(creep.memory.role === "builder") {
                 roleBuilder.run(creep);
+            }
+            if(creep.memory.role === "mover"){
+                roleMover.run(creep);
             }
         }
     } 
