@@ -37,15 +37,13 @@ export const roleMover = {
           const resource = resources[0]; // pick the first one
           if (creep.pickup(resource) === ERR_NOT_IN_RANGE) {
             creep.moveTo(resource, { visualizePathStyle: { stroke: '#ffaa00' } });
-            creep.memory.targetId = resource.id;
           }
-        } else if (tombstones.length > 0 && creep.memory.targetId === undefined) {
+        } else if (tombstones.length > 0) {
           const tombstone = tombstones[0];
           if (creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             creep.moveTo(tombstone, { visualizePathStyle: { stroke: '#ffaa00' } });
-            creep.memory.targetId = tombstone.id;
           }
-        } else if (storages.length > 0 && creep.memory.targetId === undefined) {
+        } else if (storages.length > 0) {
           // pick the fullest container
           const storage = storages.sort(
             (a, b) => b.store.getUsedCapacity(RESOURCE_ENERGY) - a.store.getUsedCapacity(RESOURCE_ENERGY)
