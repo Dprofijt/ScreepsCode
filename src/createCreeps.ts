@@ -38,7 +38,7 @@ export const creepCreater = {
         Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
       }
     }
-    if (movers.length > 2 && harvesters.length > 4) {
+    if (movers.length >= 2 && harvesters.length >= 4) {
       if (upgraders.length < 1) {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: 'upgrader' } });
       }
