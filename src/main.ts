@@ -3,6 +3,7 @@ import { roleUpgrader } from "./creeps/role.upgrader";
 import { roleBuilder } from "./creeps/role.builder";
 import { creepCreater } from "./creeps/createCreeps";
 import { roleMover } from "./creeps/role.mover";
+import { buildingTower } from "./buildings/buildingTower";
 
 export class Main {
     public loop() {
@@ -15,10 +16,8 @@ export class Main {
         }
 
         creepCreater.run();
-        // console.log('Creeps: ' + Object.keys(Game.creeps).length);
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
-            // console.log('Creep ' + name + ' Role: ' + creep.memory.role);
             if (creep.memory.role === "harvester") {
                 roleHarvester.run(creep);
             }
@@ -31,6 +30,13 @@ export class Main {
             if (creep.memory.role === "mover") {
                 roleMover.run(creep);
             }
+        }
+        const room = Game.spawns["Spawn1"].room
+        const towers = room.find(FIND_MY_STRUCTURES, {
+            filter: (s): s is StructureTower => s.structureType === STRUCTURE_TOWER
+        });
+        for (const tower of towers) {
+            buildingTower.run(tower)
         }
     }
 }

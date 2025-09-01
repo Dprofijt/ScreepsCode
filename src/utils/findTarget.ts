@@ -7,7 +7,6 @@ export function findFilledResourceStorage(creep: Creep) {
         structure.store.getFreeCapacity(RESOURCE_ENERGY) >= 0;
     }
   });
-  console.log(storages)
   if (storages.length > 0) {
 
     var target = creep.pos.findClosestByPath(storages, {

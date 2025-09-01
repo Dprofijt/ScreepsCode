@@ -20,7 +20,6 @@ export const roleUpgrader = {
         const target = Game.getObjectById(creep.memory.targetId) as StructureContainer;
 
         clearTargetIdIfStorageIsEmpty(creep);
-        console.log(creep.memory.targetId)
         if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
           creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
         } else {
