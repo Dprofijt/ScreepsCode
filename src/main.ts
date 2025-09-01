@@ -1,8 +1,8 @@
-import { roleHarvester } from "./role.harvester";
-import { roleUpgrader } from "./role.upgrader";
-import { roleBuilder } from "./role.builder";
-import { creepCreater } from "./createCreeps";
-import { roleMover } from "./role.mover";
+import { roleHarvester } from "./creeps/role.harvester";
+import { roleUpgrader } from "./creeps/role.upgrader";
+import { roleBuilder } from "./creeps/role.builder";
+import { creepCreater } from "./creeps/createCreeps";
+import { roleMover } from "./creeps/role.mover";
 
 export class Main {
     public loop(){

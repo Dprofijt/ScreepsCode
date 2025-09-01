@@ -2,10 +2,21 @@
   "name": "screeps",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "npx tsc --watch",
-    "build": "npx tsc"
+    "build": "npx tsc",
+    "buildp": "parcel build",
+    "watch": "parcel watch"
+  },
+  "source": "src/main.ts",
+  "targets": {
+    "main": false,
+    "default": {
+      "distDir": "C:/Users/dprof/AppData/Local/Screeps/scripts/screeps.com/default",
+      "engines": { "node": ">=12" },
+      "isLibrary": true,
+      "outputFormat": "global"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +24,7 @@
     "@types/screeps": "^3.3.8"
   },
   "devDependencies": {
+    "parcel": "^2.15.4",
     "typescript": "^5.9.2"
   },
   "keywords": []
