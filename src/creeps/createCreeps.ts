@@ -1,3 +1,4 @@
+import { MAXBUILDERS, MAXHARVESTERS, MAXMOVERS, MAXUPGRADERS } from "../config";
 
 export const creepCreater = {
   run() {
@@ -17,7 +18,7 @@ export const creepCreater = {
     );
     // console.log('Harvesters: ' + harvesters.length);
 
-    if (harvesters.length < 4) {
+    if (harvesters.length < MAXHARVESTERS) {
       var energySource1Harvesters = harvesters.filter(
         (creep) => creep.memory.targetId === 'source1'
       );
@@ -25,24 +26,24 @@ export const creepCreater = {
         (creep) => creep.memory.targetId === 'source2'
       );
 
-      if (energySource1Harvesters.length <= (energySource2Harvesters.length - 1)) {
+      if (energySource1Harvesters.length < 3) {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source1' } });
+
       } else {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' }, directions: [BOTTOM_RIGHT] });
       }
-
     }
 
-    if (movers.length < 2) {
+    if (movers.length < MAXMOVERS) {
       {
-        Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
       }
     }
-    if (movers.length >= 2 && harvesters.length >= 4) {
-      if (upgraders.length < 4) {
+    if (movers.length >= MAXMOVERS && harvesters.length >= MAXHARVESTERS) {
+      if (upgraders.length < MAXUPGRADERS) {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: 'upgrader' } });
       }
-      if (builders.length < 3) {
+      if (builders.length < MAXBUILDERS) {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: 'builder' } });
       }
     }

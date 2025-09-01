@@ -1,3 +1,5 @@
+import { clearTargetIdIfStorageIsEmpty, findFilledResourceStorage } from "../utils/findTarget";
+
 export const roleUpgrader = {
   run(creep: Creep) {
 
@@ -13,23 +15,12 @@ export const roleUpgrader = {
 
     if (!creep.memory.working) {
       if (creep.memory.targetId === undefined) {
-        const sources = creep.room.find(FIND_SOURCES);
-        const spawn = Game.spawns["Spawn1"];
-        var storages = creep.room.find(FIND_STRUCTURES, {
-          filter: (structure): structure is StructureContainer => {
-            return (
-              structure.structureType === STRUCTURE_CONTAINER) &&
-              structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-          }
-        });
-        const storage = storages.sort(
-          (a, b) => b.store.getUsedCapacity(RESOURCE_ENERGY) - a.store.getUsedCapacity(RESOURCE_ENERGY)
-        )[0];
-        creep.memory.targetId = storage.id;
+        findFilledResourceStorage(creep);
       } else {
         const target = Game.getObjectById(creep.memory.targetId) as StructureContainer;
 
-
+        clearTargetIdIfStorageIsEmpty(creep);
+        console.log(creep.memory.targetId)
         if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
           creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
         } else {

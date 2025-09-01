@@ -5,7 +5,7 @@ import { creepCreater } from "./creeps/createCreeps";
 import { roleMover } from "./creeps/role.mover";
 
 export class Main {
-    public loop(){
+    public loop() {
 
         for (var name in Memory.creeps) {
             if (!Game.creeps[name]) {
@@ -25,14 +25,14 @@ export class Main {
             if (creep.memory.role === "upgrader") {
                 roleUpgrader.run(creep);
             }
-            if(creep.memory.role === "builder") {
+            if (creep.memory.role === "builder") {
                 roleBuilder.run(creep);
             }
-            if(creep.memory.role === "mover"){
+            if (creep.memory.role === "mover") {
                 roleMover.run(creep);
             }
         }
-    } 
+    }
 }
 
 const main = new Main()

@@ -1,3 +1,5 @@
+import { findStorageToStoreResource } from "../utils/findTarget";
+
 export const roleHarvester = {
   run(creep: Creep) {
 
@@ -30,22 +32,7 @@ export const roleHarvester = {
         }
       }
     } else {
-      var targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return (
-            structure.structureType === STRUCTURE_CONTAINER) &&
-            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-        }
-      });
-      if (creep.memory.targetId === 'source1') {
-        if (creep.transfer(targets[1], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[1], { visualizePathStyle: { stroke: '#ffffff' } });
-        }
-      } else if (creep.memory.targetId === 'source2') {
-        if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
-        }
-      }
+      findStorageToStoreResource(creep);
     }
   }
 };
