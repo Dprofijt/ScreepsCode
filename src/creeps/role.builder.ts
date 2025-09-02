@@ -7,26 +7,15 @@ export const roleBuilder = {
 		if (creep.memory.building) {
 
 			if (!creep.memory.targetId) {
-				var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-				var halfDecayedStructures = creep.room.find(FIND_STRUCTURES, {
-					filter: (structure) => structure.hits < (structure.hitsMax - (structure.hitsMax / 4))
-				});
+				const task = Memory.buildTasks?.find(task => !task.assignedCreepNames)
 
-				if (halfDecayedStructures.length) {
-					if (creep.repair(halfDecayedStructures[0]) == ERR_NOT_IN_RANGE) {
-						creep.moveTo(halfDecayedStructures[0], { visualizePathStyle: { stroke: '#ffffff' } });
-					}
-					creep.memory.targetId = halfDecayedStructures[0].id
+				if (!task) {
+					creep.say("Build idle");
+					return;
 				}
-				else {
-					// targets.sort((a, b) => a.hits - b.hits); // Prioritize most damaged structures
-					if (targets.length) {
-						if (creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-							creep.moveTo(targets[0], { visualizePathStyle: { stroke: '#ffffff' } });
-						}
-						creep.memory.targetId = targets[0].id
-					}
-				}
+
+				task.assignedCreepNames?.push(creep.name)
+				creep.memory.targetId = task.targetId
 			} else {
 				if (creep.memory.targetId) {
 					const target = Game.getObjectById<Structure | ConstructionSite>(creep.memory.targetId as Id<Structure | ConstructionSite>);

@@ -4,6 +4,8 @@ import { roleBuilder } from "./creeps/role.builder";
 import { creepCreater } from "./creeps/createCreeps";
 import { roleMover } from "./creeps/role.mover";
 import { buildingTower } from "./buildings/buildingTower";
+import { createTasks, rebalanceTasks } from "./utils/tasks";
+import { TaskCategory, TaskPriority } from "./enums/tasksEnums";
 
 export class Main {
     public loop() {
@@ -12,8 +14,32 @@ export class Main {
             if (!Game.creeps[name]) {
                 delete Memory.creeps[name];
                 console.log("Clearing non-existing creep memory:", name);
+                Memory.buildTasks?.forEach(task => {
+                    if (task.assignedCreepNames?.includes(name)) {
+                        task.assignedCreepNames = task.assignedCreepNames.filter(n => n !== name);
+                    }
+                });
             }
         }
+        Memory.buildTasks = Memory.buildTasks?.filter(task => {
+            switch (task.type) {
+                case TaskCategory.REPAIR: {
+                    const structure = Game.getObjectById<Structure>(task.targetId!);
+                    return structure && structure.hits < (structure.hitsMax - structure.hitsMax / 10); // keep if still damaged
+                }
+                case TaskCategory.CONSTRUCTION: {
+                    const site = Game.getObjectById<ConstructionSite>(task.targetId!);
+                    return site !== null; // keep if still exists
+                }
+                default:
+                    return true; // keep unknown task types
+            }
+        });
+
+
+        createTasks()
+
+        rebalanceTasks();
 
         creepCreater.run();
         for (const name in Game.creeps) {

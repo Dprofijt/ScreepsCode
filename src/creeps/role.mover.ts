@@ -7,11 +7,11 @@ export const roleMover = {
     //TODO add logic to empty first and then harvest
     if (creep.memory.working && creep.store[RESOURCE_ENERGY] == 0) {
       creep.memory.working = false;
-      creep.say('🔄 harvest');
+      creep.say('🔄 rearm');
     }
     if (!creep.memory.working && creep.store.getFreeCapacity() == 0) {
       creep.memory.working = true;
-      creep.say('⚡ transfer');
+      creep.say('⚡ moving');
     }
     if (creep.memory.working == undefined) {
       creep.memory.working = false;
