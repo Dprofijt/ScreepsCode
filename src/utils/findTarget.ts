@@ -8,14 +8,18 @@ export function findFilledResourceStorage(creep: Creep) {
     }
   });
   if (storages.length > 0) {
-
-    var target = creep.pos.findClosestByPath(storages, {
-      filter: (structure): structure is StructureContainer => {
-        return (
-          structure.structureType === STRUCTURE_CONTAINER) &&
-          structure.store[RESOURCE_ENERGY] >= 500;
-      }
-    }) as StructureContainer
+    var target = undefined;
+    if (creep.memory.role == "mover") {
+      target = undefined;
+    } else {
+      target = creep.pos.findClosestByPath(storages, {
+        filter: (structure): structure is StructureContainer => {
+          return (
+            structure.structureType === STRUCTURE_CONTAINER) &&
+            structure.store[RESOURCE_ENERGY] >= 500;
+        }
+      }) as StructureContainer
+    }
     if (target == undefined) {
       target = storages.sort(
         (a, b) => b.store.getUsedCapacity(RESOURCE_ENERGY) - a.store.getUsedCapacity(RESOURCE_ENERGY)

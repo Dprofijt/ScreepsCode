@@ -33,10 +33,17 @@ export const creepCreater = {
       }
     }
 
+
+    if (harvesters.length === 0) {
+      Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' } });
+    }
     if (movers.length < MAXMOVERS) {
       {
         Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
       }
+    }
+    if (movers.length === 0) {
+      Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
     }
     if (movers.length >= MAXMOVERS && harvesters.length >= MAXHARVESTERS) {
       if (upgraders.length < MAXUPGRADERS) {
