@@ -52,6 +52,12 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
     }
     return;
   }
+  if (storage instanceof Resource) {
+    return;
+  }
+  if (storage instanceof Tombstone) {
+    return;
+  }
   if (storage && storage?.store[RESOURCE_ENERGY] === 0) {
     creep.memory.targetId = undefined
     creep.memory.resourceId = undefined

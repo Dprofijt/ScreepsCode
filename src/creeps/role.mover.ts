@@ -44,17 +44,27 @@ export const roleMover = {
 
         }
       } else {
-        const target = Game.getObjectById(creep.memory.targetId) as StructureContainer;
+        const target = Game.getObjectById(creep.memory.targetId);
         clearTargetIdIfStorageIsEmpty(creep);
-        if (target) {
+        if (target instanceof StructureContainer) {
+          if (target) {
+            if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+              creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+            }
+            if (target.store.getUsedCapacity(RESOURCE_ENERGY) === 0) {
+              creep.memory.targetId = undefined;
+            }
+          } else {
+            creep.memory.targetId = undefined;
+          }
+        } else if (target instanceof Resource) {
+          if (creep.pickup(target) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+          }
+        } else if (target instanceof Tombstone) {
           if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
-          if (target.store.getUsedCapacity(RESOURCE_ENERGY) === 0) {
-            creep.memory.targetId = undefined;
-          }
-        } else {
-          creep.memory.targetId = undefined;
         }
       }
     }

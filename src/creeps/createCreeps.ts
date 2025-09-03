@@ -29,16 +29,12 @@ function createCombatCreeps() {
   );
   if (closeCombats.length < MAXCLOSECOMBATS) {
     Game.spawns["Spawn1"].spawnCreep([TOUGH, TOUGH, ATTACK, ATTACK, ATTACK, MOVE, MOVE, MOVE], 'CloseCombat' + Game.time, { memory: { role: RoleEnum.CLOSECOMBAT } });
-  }
-  if (rangeCombats.length < MAXRANGEDCOMBATS) {
+  } else if (rangeCombats.length < MAXRANGEDCOMBATS) {
     Game.spawns["Spawn1"].spawnCreep([TOUGH, RANGED_ATTACK, RANGED_ATTACK, RANGED_ATTACK, MOVE, MOVE, MOVE], 'RangeCombat' + Game.time, { memory: { role: RoleEnum.RANGECOMBAT } });
-  }
-  if (healers.length < MAXHEALERS) {
+  } else if (healers.length < MAXHEALERS) {
     Game.spawns["Spawn1"].spawnCreep([TOUGH, HEAL, HEAL, HEAL, MOVE, MOVE, MOVE], 'Healer' + Game.time, { memory: { role: RoleEnum.HEALER } });
   }
-
 }
-
 
 function createDefaultCreeps() {
   var harvesters = Object.values(Game.creeps).filter(
