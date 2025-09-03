@@ -80,7 +80,6 @@ export const roleMover = {
       })
       var target = creep.pos.findClosestByPath(targets);
       if (!target) return;
-      console.log("target found" + target.id)
       if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target, { visualizePathStyle: { stroke: '#52a9e2ff' } });
       }

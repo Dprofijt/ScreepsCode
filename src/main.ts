@@ -29,6 +29,9 @@ export class Main {
         creepCreater.run();
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
+            // similar to all hail danny but then in 10 characters
+            creep.say("Hail Danny")
+
             if (creep.memory.role === RoleEnum.HARVESTER) {
                 roleHarvester.run(creep);
             }

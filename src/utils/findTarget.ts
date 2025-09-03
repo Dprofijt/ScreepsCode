@@ -25,7 +25,6 @@ export function findFilledResourceStorage(creep: Creep) {
         (a, b) => b.store.getUsedCapacity(RESOURCE_ENERGY) - a.store.getUsedCapacity(RESOURCE_ENERGY)
       )[0];
     }
-    creep.say("target" + target.id)
     // pick the fullest container
     if (creep.memory.role == "builder") {
       creep.memory.resourceId = target.id;
@@ -59,8 +58,18 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
     return;
   }
   if (storage && storage?.store[RESOURCE_ENERGY] === 0) {
-    creep.memory.targetId = undefined
-    creep.memory.resourceId = undefined
+    if (creep.memory.role == "builder") {
+      creep.memory.resourceId = undefined;
+    } else {
+      creep.memory.targetId = undefined;
+    }
+  }
+  else {
+    if (creep.memory.role == "builder") {
+      creep.memory.resourceId = undefined;
+    } else {
+      creep.memory.targetId = undefined;
+    }
   }
 }
 
