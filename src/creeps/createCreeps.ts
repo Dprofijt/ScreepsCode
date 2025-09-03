@@ -25,33 +25,38 @@ export const creepCreater = {
         (creep) => creep.memory.targetId === 'source2'
       );
 
-      if (energySource1Harvesters.length < 3) {
-        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source1' } });
+      if (energySource1Harvesters.length < 2) {
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source1' } });
 
       } else {
-        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' }, directions: [BOTTOM_RIGHT] });
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' }, directions: [BOTTOM_RIGHT] });
       }
     }
+    createBackupCreeps(harvesters, "harvester")
 
-
-    if (harvesters.length === 0) {
-      Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' } });
-    }
     if (movers.length < MAXMOVERS) {
       {
-        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
       }
     }
-    if (movers.length === 0) {
-      Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
-    }
+    createBackupCreeps(movers, "mover")
     if (movers.length >= MAXMOVERS && harvesters.length >= MAXHARVESTERS) {
       if (upgraders.length < MAXUPGRADERS) {
-        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: 'upgrader' } });
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: 'upgrader' } });
       }
       if (builders.length < MAXBUILDERS) {
-        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: 'builder' } });
+        Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: 'builder' } });
       }
     }
   }
+}
+
+function createBackupCreeps(creeps: Creep[], role: string) {
+  if (creeps.length === 0 && role === "harvester") {
+    Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Harvester' + Game.time, { memory: { role: 'harvester', targetId: 'source2' } });
+  }
+  if (creeps.length === 0 && role === "mover") {
+    Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, MOVE], 'Mover' + Game.time, { memory: { role: 'mover' } });
+  }
+
 }
