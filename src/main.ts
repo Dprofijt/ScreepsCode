@@ -6,6 +6,10 @@ import { roleMover } from "./creeps/role.mover";
 import { buildingTower } from "./buildings/buildingTower";
 import { createTasks, rebalanceTasks } from "./utils/builderTasks";
 import { TaskCategory, TaskPriority } from "./enums/tasksEnums";
+import { RoleEnum } from "./enums/roleEnums";
+import { roleCloseCombat } from "./creeps/role.closeCombat";
+import { roleRangeCombat } from "./creeps/role.rangeCombat";
+import { roleHealer } from "./creeps/role.healer";
 
 export class Main {
     public loop() {
@@ -25,18 +29,28 @@ export class Main {
         creepCreater.run();
         for (const name in Game.creeps) {
             const creep = Game.creeps[name];
-            if (creep.memory.role === "harvester") {
+            if (creep.memory.role === RoleEnum.HARVESTER) {
                 roleHarvester.run(creep);
             }
-            if (creep.memory.role === "upgrader") {
+            if (creep.memory.role === RoleEnum.UPGRADER) {
                 roleUpgrader.run(creep);
             }
-            if (creep.memory.role === "builder") {
+            if (creep.memory.role === RoleEnum.BUILDER) {
                 roleBuilder.run(creep);
             }
-            if (creep.memory.role === "mover") {
+            if (creep.memory.role === RoleEnum.MOVER) {
                 roleMover.run(creep);
             }
+            if (creep.memory.role === RoleEnum.CLOSECOMBAT) {
+                roleCloseCombat.run(creep);
+            }
+            if (creep.memory.role === RoleEnum.RANGECOMBAT) {
+                roleRangeCombat.run(creep);
+            }
+            if (creep.memory.role === RoleEnum.HEALER) {
+                roleHealer.run(creep);
+            }
+
         }
         const room = Game.spawns["Spawn1"].room
         const towers = room.find(FIND_MY_STRUCTURES, {

@@ -63,7 +63,7 @@ export function findStorageToStoreResource(creep: Creep) {
     filter: (structure) => {
       return (
         structure.structureType === STRUCTURE_CONTAINER) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY];
     }
   });
   const target = creep.pos.findClosestByPath(targets) as StructureContainer

@@ -7,6 +7,6 @@ export enum TaskPriority {
 }
 
 export enum TaskCategory {
-  CONSTRUCTION = 1,
-  REPAIR = 2,
+  CONSTRUCTION = "Construction",
+  REPAIR = "Repair",
 }

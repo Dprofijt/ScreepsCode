@@ -29,13 +29,18 @@ export const roleMover = {
           if (creep.pickup(resource) === ERR_NOT_IN_RANGE) {
             creep.moveTo(resource, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
+          creep.memory.targetId = resource.id;
+          console.log("resource found")
         } else if (tombstones.length > 0) {
           const tombstone = tombstones[0];
           if (creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             creep.moveTo(tombstone, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
+          creep.memory.targetId = tombstone.id;
+          console.log("tombstone found")
         } else {
           findFilledResourceStorage(creep)
+          console.log("container found")
 
         }
       } else {
@@ -65,6 +70,7 @@ export const roleMover = {
       })
       var target = creep.pos.findClosestByPath(targets);
       if (!target) return;
+      console.log("target found" + target.id)
       if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target, { visualizePathStyle: { stroke: '#52a9e2ff' } });
       }
