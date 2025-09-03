@@ -22,7 +22,7 @@ export const roleMover = {
         const sources = creep.room.find(FIND_SOURCES);
 
         const resources = creep.room.find(FIND_DROPPED_RESOURCES);
-        const tombstones = creep.room.find(FIND_TOMBSTONES);
+        const tombstones = creep.room.find(FIND_TOMBSTONES).filter(t => t.store[RESOURCE_ENERGY] > 0);
 
         if (resources.length > 0) {
           const resource = resources[0]; // pick the first one

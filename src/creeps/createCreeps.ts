@@ -77,7 +77,7 @@ function createDefaultCreeps() {
   //createBackupCreeps(movers, "mover")
   if (movers.length >= MAXMOVERS && harvesters.length >= MAXHARVESTERS) {
     if (upgraders.length < MAXUPGRADERS) {
-      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: RoleEnum.UPGRADER } });
+      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], 'Upgrader' + Game.time, { memory: { role: RoleEnum.UPGRADER } });
     }
     if (builders.length < MAXBUILDERS) {
       Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: RoleEnum.BUILDER } });

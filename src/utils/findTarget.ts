@@ -55,6 +55,10 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
     return;
   }
   if (storage instanceof Tombstone) {
+    if (storage.store[RESOURCE_ENERGY] === 0) {
+      creep.memory.targetId = undefined
+      creep.memory.resourceId = undefined
+    }
     return;
   }
   if (storage && storage?.store[RESOURCE_ENERGY] === 0) {
@@ -77,8 +81,9 @@ export function findStorageToStoreResource(creep: Creep) {
   var targets = creep.room.find(FIND_STRUCTURES, {
     filter: (structure) => {
       return (
-        structure.structureType === STRUCTURE_CONTAINER) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY];
+        structure.structureType === STRUCTURE_CONTAINER
+        || structure.structureType === STRUCTURE_STORAGE)
+        && structure.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY];
     }
   });
   const target = creep.pos.findClosestByPath(targets) as StructureContainer
