@@ -24,11 +24,11 @@ export const roleHarvester = {
 
       if (creep.memory.targetId === 'source1') {
         if (sources.length > 0 && creep.harvest(source1) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source1, { visualizePathStyle: { stroke: '#ffaa00' }, swampCost: 10 });
+          creep.moveTo(source1, { visualizePathStyle: { stroke: '#f3fc7cff' }, swampCost: 15 });
         }
       } else if (creep.memory.targetId === 'source2') {
         if (sources.length > 1 && creep.harvest(source2) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source2, { visualizePathStyle: { stroke: '#ffaa00' }, swampCost: 10 });
+          creep.moveTo(source2, { visualizePathStyle: { stroke: '#f3fc7cff' }, swampCost: 15 });
         }
       }
     } else {

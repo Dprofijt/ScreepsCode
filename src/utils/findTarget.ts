@@ -27,25 +27,34 @@ export function findFilledResourceStorage(creep: Creep) {
     }
     creep.say("target" + target.id)
     // pick the fullest container
-
-    creep.memory.targetId = target.id;
-
+    if (creep.memory.role == "builder") {
+      creep.memory.resourceId = target.id;
+    } else {
+      creep.memory.targetId = target.id;
+    }
     if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+      creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
     }
   }
 }
 
 export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
-  const storage = Game.getObjectById<StructureContainer>(creep.memory.targetId as Id<StructureContainer>);
+  var storage;
+  if (creep.memory.role == "builder") {
+    storage = Game.getObjectById<StructureContainer>(creep.memory.resourceId as Id<StructureContainer>);
+  } else {
+    storage = Game.getObjectById<StructureContainer>(creep.memory.targetId as Id<StructureContainer>);
+  }
   if (storage instanceof ConstructionSite) {
     if (creep.store[RESOURCE_ENERGY] === 0) {
       creep.memory.targetId = undefined
+      creep.memory.resourceId = undefined
     }
     return;
   }
   if (storage && storage.store[RESOURCE_ENERGY] === 0) {
     creep.memory.targetId = undefined
+    creep.memory.resourceId = undefined
   }
 }
 
@@ -60,6 +69,6 @@ export function findStorageToStoreResource(creep: Creep) {
   const target = creep.pos.findClosestByPath(targets) as StructureContainer
 
   if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+    creep.moveTo(target, { visualizePathStyle: { stroke: '#dcdf2fff' } });
   }
 }

@@ -5,6 +5,7 @@ declare global {
   interface CreepMemory {
     role?: "harvester" | "upgrader" | "builder" | "mover"; // Role of the creep
     targetId?: string; // ID of the target (e.g., source or structure)
+    resourceId?: string;
     working?: boolean; // Whether the creep is currently working (e.g., harvesting or upgrading)
     building?: boolean; // Whether the creep is currently building
   }
@@ -21,7 +22,7 @@ declare global {
     targetId: Id<any>;
     structureType?: any;
     position?: any;
-    assignedCreepNames?: string[];
+    assignedCreepNames: string[];
     tickCreated: number;
     priority: TaskPriority;
   }

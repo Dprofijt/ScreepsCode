@@ -21,18 +21,18 @@ export const roleUpgrader = {
 
         clearTargetIdIfStorageIsEmpty(creep);
         if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+          creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
         } else {
           const sources = creep.room.find(FIND_SOURCES);
 
           if (sources.length > 0 && creep.harvest(sources[1]) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[1], { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.moveTo(sources[1], { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
         }
       }
     } else if (creep.memory.working) {
       if (creep.upgradeController(creep.room.controller!) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(creep.room.controller!, { visualizePathStyle: { stroke: '#ffffff' } });
+        creep.moveTo(creep.room.controller!, { visualizePathStyle: { stroke: '#2d9929ff' } });
       }
     }
   }

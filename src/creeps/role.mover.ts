@@ -27,12 +27,12 @@ export const roleMover = {
         if (resources.length > 0) {
           const resource = resources[0]; // pick the first one
           if (creep.pickup(resource) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(resource, { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.moveTo(resource, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
         } else if (tombstones.length > 0) {
           const tombstone = tombstones[0];
           if (creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(tombstone, { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.moveTo(tombstone, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
         } else {
           findFilledResourceStorage(creep)
@@ -43,7 +43,7 @@ export const roleMover = {
         clearTargetIdIfStorageIsEmpty(creep);
         if (target) {
           if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
           }
           if (target.store.getUsedCapacity(RESOURCE_ENERGY) === 0) {
             creep.memory.targetId = undefined;
@@ -66,7 +66,7 @@ export const roleMover = {
       var target = creep.pos.findClosestByPath(targets);
       if (!target) return;
       if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+        creep.moveTo(target, { visualizePathStyle: { stroke: '#52a9e2ff' } });
       }
 
     }
