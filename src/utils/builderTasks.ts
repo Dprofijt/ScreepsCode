@@ -72,7 +72,7 @@ export function rebalanceTasks() {
           unassignedTask.assignedCreepNames.push(creep.name);
         }
         creep.memory.targetId = unassignedTask.targetId;
-        console.log(`${creep.name} assigned to unassigned task ${unassignedTask.structureType} (priority: ${unassignedTask.priority})`);
+        console.log(`${creep.name} assigned to unassigned task ${unassignedTask.type} for structure ${unassignedTask.structureType} (priority: ${unassignedTask.priority})`);
         continue;
       }
     }
