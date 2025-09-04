@@ -10,6 +10,7 @@ import { RoleEnum } from "./enums/roleEnums";
 import { roleCloseCombat } from "./creeps/role.closeCombat";
 import { roleRangeCombat } from "./creeps/role.rangeCombat";
 import { roleHealer } from "./creeps/role.healer";
+import { roleScout } from "./creeps/role.scout";
 
 export class Main {
     public loop() {
@@ -31,27 +32,34 @@ export class Main {
             const creep = Game.creeps[name];
             // similar to all hail danny but then in 10 characters
             // creep.say("Hail Danny")
-
-            if (creep.memory.role === RoleEnum.HARVESTER) {
-                roleHarvester.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.UPGRADER) {
-                roleUpgrader.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.BUILDER) {
-                roleBuilder.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.MOVER) {
-                roleMover.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.CLOSECOMBAT) {
-                roleCloseCombat.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.RANGECOMBAT) {
-                roleRangeCombat.run(creep);
-            }
-            if (creep.memory.role === RoleEnum.HEALER) {
-                roleHealer.run(creep);
+            switch (creep.memory.role) {
+                case RoleEnum.HARVESTER:
+                    roleHarvester.run(creep);
+                    break;
+                case RoleEnum.UPGRADER:
+                    roleUpgrader.run(creep);
+                    break;
+                case RoleEnum.BUILDER:
+                    roleBuilder.run(creep);
+                    break;
+                case RoleEnum.MOVER:
+                    roleMover.run(creep);
+                    break;
+                case RoleEnum.CLOSECOMBAT:
+                    roleCloseCombat.run(creep);
+                    break;
+                case RoleEnum.RANGECOMBAT:
+                    roleRangeCombat.run(creep);
+                    break;
+                case RoleEnum.HEALER:
+                    roleHealer.run(creep);
+                    break;
+                case RoleEnum.SCOUT:
+                    roleScout.run(creep, "W46S4");
+                    break;
+                default:
+                    console.log(creep.memory.role)
+                    console.log(`Creep ${creep.name} had no or unknown role, set to harvester`);
             }
 
         }

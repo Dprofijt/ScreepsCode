@@ -1,5 +1,4 @@
-export function findFilledResourceStorage(creep: Creep) {
-
+export function findFilledResourceStorage(creep: Creep): void {
   var storages = creep.room.find(FIND_STRUCTURES, {
     filter: (structure): structure is StructureContainer => {
       return (
@@ -68,7 +67,7 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
       creep.memory.targetId = undefined;
     }
   }
-  else {
+  if (!storage) {
     if (creep.memory.role == "builder") {
       creep.memory.resourceId = undefined;
     } else {

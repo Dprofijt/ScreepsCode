@@ -6,5 +6,6 @@ export enum RoleEnum {
   CLOSECOMBAT = "closeCombat",
   RANGECOMBAT = "rangeCombat",
   HEALER = "healer",
+  SCOUT = "SCOUT",
 }
 //"harvester" | "upgrader" | "builder" | "mover"

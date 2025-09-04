@@ -83,7 +83,6 @@ function createDefaultCreeps() {
     if (builders.length < MAXBUILDERS) {
       Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: RoleEnum.BUILDER } });
     }
-    console.log('Build tasks: ' + Memory.buildTasks.length)
     if (Memory.buildTasks.filter(task => task.priority >= TaskPriority.High).length >= 2 && builders.length < 2) {
       Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Builder' + Game.time, { memory: { role: RoleEnum.BUILDER } });
     }

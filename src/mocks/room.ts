@@ -25,3 +25,4 @@ export function createMockPosition(): RoomPosition {
     },
   } as unknown as RoomPosition;
 }
+

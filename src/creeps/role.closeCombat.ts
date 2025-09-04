@@ -1,7 +1,8 @@
 export const roleCloseCombat = {
   run(creep: Creep) {
     const hostileCreeps = creep.room.find(FIND_HOSTILE_CREEPS);
-    if (hostileCreeps.length > 0) {
+    const hostileCreepsOutside = hostileCreeps.filter(c => !c.my && !c.owner.username.includes('Source Keeper'));
+    if (hostileCreeps.length > 0, hostileCreepsOutside.length > 0) {
       const target = creep.pos.findClosestByPath(hostileCreeps);
       //
 
