@@ -4,7 +4,7 @@ export function findFilledResourceStorage(creep: Creep) {
     filter: (structure): structure is StructureContainer => {
       return (
         structure.structureType === STRUCTURE_CONTAINER) &&
-        structure.store.getFreeCapacity(RESOURCE_ENERGY) >= 0;
+        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
     }
   });
   if (storages.length > 0) {

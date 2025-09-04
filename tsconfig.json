@@ -8,5 +8,8 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "C:/Users/dprof/AppData/Local/Screeps/scripts/screeps.com/default"
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*",
+    "jest.setup.ts"
+  ]
 }
