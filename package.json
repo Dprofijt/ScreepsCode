@@ -13,7 +13,7 @@
   "targets": {
     "main": false,
     "default": {
-      "distDir": "C:/Users/dprof/AppData/Local/Screeps/scripts/screeps.com/default",
+      "distDir": "C:/Users/dprof/AppData/Local/Screeps/scripts/screeps.com/BT",
       "engines": {
         "node": ">=12"
       },
