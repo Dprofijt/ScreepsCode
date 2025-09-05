@@ -9,6 +9,7 @@ declare global {
     resourceId?: string;
     working?: boolean; // Whether the creep is currently working (e.g., harvesting or upgrading)
     building?: boolean; // Whether the creep is currently building
+    lastHits?: number; // Store last tick hits to detect damage
   }
 
   interface Memory {
