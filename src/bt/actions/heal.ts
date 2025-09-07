@@ -22,7 +22,7 @@ export const healClosestAlly = (creep: Creep): Status => {
   if (!target) return 'FAILURE';
 
   if (creep.heal(target) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#00ff00' } });
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#00ff00' } }*/);
   }
 
   return 'SUCCESS';
@@ -44,7 +44,7 @@ export const selfHealIfSafe = (creep: Creep, safeRange = 3): Status => {
 export const healTarget = (creep: Creep, target: Creep): Status => {
   if (!target || target.hits === target.hitsMax) return 'FAILURE';
   if (creep.heal(target) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#00ff00' } });
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#00ff00' } }*/);
   }
   return 'SUCCESS';
 };

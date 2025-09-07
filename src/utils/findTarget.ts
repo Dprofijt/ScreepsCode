@@ -31,7 +31,7 @@ export function findFilledResourceStorage(creep: Creep): void {
       creep.memory.targetId = target.id;
     }
     if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+      creep.moveTo(target/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     }
   }
 }
@@ -90,6 +90,6 @@ export function findStorageToStoreResource(creep: Creep) {
   const target = creep.pos.findClosestByPath(targets) as StructureContainer
 
   if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#dcdf2fff' } });
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#dcdf2fff' } }*/);
   }
 }

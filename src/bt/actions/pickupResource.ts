@@ -24,7 +24,7 @@ export const pickupResource = (creep: Creep): Status => {
     return 'FAILURE';
   }
   if (creep.pickup(resource) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(resource, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+    creep.moveTo(resource/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     return 'RUNNING';
   }
   return 'FAILURE'
@@ -52,7 +52,7 @@ export const pickupEnergyFromTombstone = (creep: Creep): Status => {
     return 'FAILURE';
   }
   if (creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(tombstone, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+    creep.moveTo(tombstone/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     return 'RUNNING';
   }
   if (tombstone.store[RESOURCE_ENERGY] === 0) {
@@ -70,7 +70,7 @@ export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
       s.structureType === STRUCTURE_CONTAINER
       || s.structureType === STRUCTURE_STORAGE)
       && s.store[RESOURCE_ENERGY] > 0
-  });
+  }).sort((a, b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
   if (containers.length > 0) {
     const closest = creep.pos.findClosestByPath(containers) as StructureContainer | StructureStorage;
     creep.memory.resourceId = closest.id;
@@ -87,7 +87,7 @@ export const pickupEnergyFromContainer = (creep: Creep): Status => {
     return 'FAILURE';
   }
   if (creep.withdraw(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(container, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+    creep.moveTo(container/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     return 'RUNNING';
   }
   if (container.store[RESOURCE_ENERGY] === 0) {

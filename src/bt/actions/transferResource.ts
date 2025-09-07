@@ -31,7 +31,7 @@ export const transferEnergyToTarget = (creep: Creep): Status => {
     return 'FAILURE'
   }
   if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#52a9e2ff' } })
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#52a9e2ff' } }*/)
     return 'RUNNING'
   }
   return 'FAILURE';

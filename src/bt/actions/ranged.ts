@@ -8,7 +8,7 @@ export const rangedAttackClosestEnemy = (creep: Creep): Status => {
   if (!target) return 'FAILURE';
 
   if (creep.rangedAttack(target) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#00ff00' } });
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#00ff00' } }*/);
     return 'RUNNING';
   }
 

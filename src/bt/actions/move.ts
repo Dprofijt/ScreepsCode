@@ -5,7 +5,7 @@ import { Status } from '../core';
  */
 export const moveTo = (creep: Creep, target: RoomPosition | Flag): Status => {
   if (!target) return 'FAILURE';
-  const code = creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+  const code = creep.moveTo(target/*, { visualizePathStyle: { stroke: '#ffffff' } }*/);
   return code === ERR_NO_PATH ? 'FAILURE' : 'SUCCESS';
 };
 

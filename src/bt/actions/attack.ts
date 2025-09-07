@@ -8,7 +8,7 @@ export const attackClosestEnemy = (creep: Creep): Status => {
   if (!target) return 'FAILURE';
 
   if (creep.attack(target) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#ff0000' } });
+    creep.moveTo(target/*, { visualizePathStyle:   { stroke: '#ff0000' } } */);
   }
 
   return 'SUCCESS';
@@ -21,6 +21,6 @@ export const chaseClosestEnemy = (creep: Creep): Status => {
   const target = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
   if (!target) return 'FAILURE';
 
-  creep.moveTo(target, { visualizePathStyle: { stroke: '#ff0000' } });
+  creep.moveTo(target/*, { visualizePathStyle: { stroke: '#ff0000' } }*/);
   return 'SUCCESS';
 };

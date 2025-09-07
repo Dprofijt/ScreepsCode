@@ -25,11 +25,11 @@ export const roleHarvester = {
 
         if (creep.memory.targetId === 'source1') {
           if (sources.length > 0 && creep.harvest(source1) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(source1, { visualizePathStyle: { stroke: '#f3fc7cff' }, swampCost: 30, plainCost: 1 });
+            creep.moveTo(source1/*, { visualizePathStyle: { stroke: '#f3fc7cff' }*/, { swampCost: 30, plainCost: 1 });
           }
         } else if (creep.memory.targetId === 'source2') {
           if (sources.length > 1 && creep.harvest(source2) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(source2, { visualizePathStyle: { stroke: '#f3fc7cff' }, swampCost: 30 });
+            creep.moveTo(source2/*, { visualizePathStyle: { stroke: '#f3fc7cff' }*/, { swampCost: 30 });
           }
         }
       } else if (creep.memory.targetId === 'source3') {
@@ -39,14 +39,14 @@ export const roleHarvester = {
 
         if (creep.room.name !== neighborRoom) {
           // Move to center of neighbor room
-          creep.moveTo(targetPos, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+          creep.moveTo(targetPos/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
         } else {
           // In neighbor room, harvest first source
           const neighborSources = creep.room.find(FIND_SOURCES);
           if (neighborSources.length > 0) {
             const source = neighborSources[0];
             if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-              creep.moveTo(source, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+              creep.moveTo(source/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
             }
           }
         }
@@ -54,7 +54,7 @@ export const roleHarvester = {
     } else {
       if (creep.room.name !== 'W46S3') {
         const targetPos = new RoomPosition(25, 25, 'W46S3'); // roughly center of the room
-        creep.moveTo(targetPos, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+        creep.moveTo(targetPos/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
       }
       findStorageToStoreResource(creep);
     }
