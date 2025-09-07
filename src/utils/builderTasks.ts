@@ -58,7 +58,7 @@ export function rebalanceTasks() {
     const currentTask = Memory.buildTasks.find(task => task.targetId == creep.memory.targetId)
     if (!currentTask) {
       let unassignedTask = tasks.find(task => !task.assignedCreepNames || task.assignedCreepNames.length === 0);
-      console.log("unassigned task")
+      // console.log("unassigned task")
       if (!unassignedTask) {
         unassignedTask = tasks
           .sort((a, b) => b.priority - a.priority)

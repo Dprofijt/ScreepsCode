@@ -1,6 +1,8 @@
+import { CreepState } from "./creepState";
+
 // src/bt/core.ts
 export type Status = 'SUCCESS' | 'FAILURE' | 'RUNNING';
-export type Node = (creep: Creep) => Status;
+export type Node = (creep: Creep, state?: CreepState) => Status;
 
 /**
  * Sequence: run children in order. If one returns RUNNING or FAILURE,
