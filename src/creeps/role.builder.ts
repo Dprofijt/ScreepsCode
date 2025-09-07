@@ -1,3 +1,5 @@
+import { MAXHEALTHWALLSANDRAMPARTS } from "../config";
+import { TaskPriority } from "../enums/tasksEnums";
 import { clearTargetIdIfStorageIsEmpty, findFilledResourceStorage } from "../utils/findTarget";
 
 export const roleBuilder = {
@@ -27,6 +29,15 @@ export const roleBuilder = {
 						}
 						if (target.hits == target.hitsMax) {
 							creep.memory.targetId = undefined;
+						}
+						if (target.hits >= MAXHEALTHWALLSANDRAMPARTS) {
+							if (target.structureType === STRUCTURE_RAMPART || STRUCTURE_WALL) {
+								creep.memory.targetId = undefined;
+								var task = Memory.buildTasks.find(task => task.targetId === target.id)
+								if (task) {
+									task.priority = TaskPriority.Low
+								}
+							}
 						}
 					} else {
 						creep.memory.targetId = undefined;

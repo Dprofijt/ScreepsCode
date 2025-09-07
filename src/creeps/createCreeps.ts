@@ -64,8 +64,11 @@ function createDefaultCreeps() {
     if (energySource1Harvesters.length < 1) {
       Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: RoleEnum.HARVESTER, targetId: 'source1' } });
 
+    } else if (energySource2Harvesters.length < 1) {
+      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: RoleEnum.HARVESTER, targetId: 'source2' }, directions: [BOTTOM_RIGHT] });
     } else {
-      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: RoleEnum.HARVESTER, targetId: 'source2' }, directions: [BOTTOM_RIGHT] });
+      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], 'Harvester' + Game.time, { memory: { role: RoleEnum.HARVESTER, targetId: 'source3' }, directions: [LEFT] });
+
     }
   }
   //createBackupCreeps(harvesters, "harvester")

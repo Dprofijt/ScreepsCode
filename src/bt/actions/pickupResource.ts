@@ -72,7 +72,7 @@ export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
       && s.store[RESOURCE_ENERGY] > 0
   });
   if (containers.length > 0) {
-    const closest = creep.pos.findClosestByPath(containers) as StructureContainer;
+    const closest = creep.pos.findClosestByPath(containers) as StructureContainer | StructureStorage;
     creep.memory.resourceId = closest.id;
     return 'SUCCESS';
   }
@@ -81,7 +81,7 @@ export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
 
 export const pickupEnergyFromContainer = (creep: Creep): Status => {
   if (!creep.memory.resourceId) return 'FAILURE';
-  const container = Game.getObjectById(creep.memory.resourceId) as StructureContainer;
+  const container = Game.getObjectById(creep.memory.resourceId) as StructureContainer | StructureStorage;
   if (!container || container.store[RESOURCE_ENERGY] === 0) {
     creep.memory.resourceId = undefined;
     return 'FAILURE';

@@ -1,8 +1,8 @@
 export function findFilledResourceStorage(creep: Creep): void {
   var storages = creep.room.find(FIND_STRUCTURES, {
-    filter: (structure): structure is StructureContainer => {
+    filter: (structure): structure is (StructureContainer | StructureStorage) => {
       return (
-        structure.structureType === STRUCTURE_CONTAINER) &&
+        structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
     }
   });
@@ -12,9 +12,9 @@ export function findFilledResourceStorage(creep: Creep): void {
       target = undefined;
     } else {
       target = creep.pos.findClosestByPath(storages, {
-        filter: (structure): structure is StructureContainer => {
+        filter: (structure): structure is (StructureContainer | StructureStorage) => {
           return (
-            structure.structureType === STRUCTURE_CONTAINER) &&
+            structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
             structure.store[RESOURCE_ENERGY] >= 500;
         }
       }) as StructureContainer
