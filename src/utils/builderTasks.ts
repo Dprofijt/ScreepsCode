@@ -61,7 +61,7 @@ export function rebalanceTasks() {
   const builders = Object.values(Game.creeps).filter(c => c.memory.role === "builder");
 
   for (const creep of builders) {
-    const currentTask = Memory.buildTasks.find(task => task.targetId == creep.memory.targetId)
+    const currentTask = Memory.buildTasks.find(task => task.assignedCreepNames.includes(creep.name))
     if (!currentTask) {
       let unassignedTask = tasks.find(task => !task.assignedCreepNames || task.assignedCreepNames.length === 0);
       // console.log("unassigned task")

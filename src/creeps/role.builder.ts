@@ -31,15 +31,22 @@ export const roleBuilder = {
 							creep.memory.targetId = undefined;
 						}
 						if (target.hits >= MAXHEALTHWALLSANDRAMPARTS) {
-							if (target.structureType === STRUCTURE_RAMPART || STRUCTURE_WALL) {
+							console.log("643we")
+							var test = Game.getObjectById(target.id) as Structure
+							if (test.structureType === STRUCTURE_RAMPART || STRUCTURE_WALL) {
+								console.log(test.structureType + test.pos)
 								creep.memory.targetId = undefined;
-								var task = Memory.buildTasks.find(task => task.targetId === target.id)
+								console.log("TEST3")
+								var task = Memory.buildTasks.find(task => task.targetId === test.id)
 								if (task) {
+									console.log("TEST")
 									task.priority = TaskPriority.Low
+									task.assignedCreepNames = task.assignedCreepNames.filter(name => name != creep.name)
 								}
 							}
 						}
 					} else {
+						console.log("TEST5")
 						creep.memory.targetId = undefined;
 					}
 				}

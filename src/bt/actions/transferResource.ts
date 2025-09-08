@@ -15,9 +15,23 @@ export const setTargetIdForExtensionOrSpawnOrTower = (creep: Creep): Status => {
   return 'FAILURE';
 };
 
+export const setTargetIdForStorage = (creep: Creep): Status => {
+  const target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+    filter: (s) =>
+      (s.structureType === STRUCTURE_STORAGE) && s.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY]
+  })
+
+  if (target) {
+    creep.memory.targetId = target.id;
+    return 'SUCCESS'
+  }
+  return 'FAILURE'
+
+}
+
 export const transferEnergyToTarget = (creep: Creep): Status => {
   if (!creep.memory.targetId) return 'FAILURE';
-  const target = Game.getObjectById(creep.memory.targetId) as StructureExtension | StructureSpawn | StructureTower;
+  const target = Game.getObjectById(creep.memory.targetId) as StructureExtension | StructureSpawn | StructureTower | StructureStorage;
   if (!target) {
     creep.memory.targetId = undefined;
     return 'FAILURE';

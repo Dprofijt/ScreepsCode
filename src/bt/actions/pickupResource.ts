@@ -67,16 +67,25 @@ export const pickupEnergyFromTombstone = (creep: Creep): Status => {
 export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
   const containers = creep.room.find(FIND_STRUCTURES, {
     filter: (s): s is StructureContainer => (
-      s.structureType === STRUCTURE_CONTAINER
-      || s.structureType === STRUCTURE_STORAGE)
+      s.structureType === STRUCTURE_CONTAINER)
       && s.store[RESOURCE_ENERGY] > 0
   }).sort((a, b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
   if (containers.length > 0) {
     const closest = creep.pos.findClosestByPath(containers) as StructureContainer | StructureStorage;
     creep.memory.resourceId = closest.id;
     return 'SUCCESS';
+  } else {
+    const storage = creep.room.find(FIND_STRUCTURES, {
+      filter: (s): s is StructureStorage => (
+        s.structureType === STRUCTURE_STORAGE)
+        && s.store[RESOURCE_ENERGY] > 0
+    })[0]
+    if (storage) {
+      creep.memory.resourceId = storage.id;
+      return 'SUCCESS';
+    }
+    return 'FAILURE'
   }
-  return 'FAILURE';
 }
 
 export const pickupEnergyFromContainer = (creep: Creep): Status => {

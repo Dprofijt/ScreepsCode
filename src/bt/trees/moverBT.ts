@@ -1,7 +1,7 @@
 import { Selector, Sequence, Node } from '../core';
 import { isEmpty, hasNoResourceId, hasResourceId, hasTargetId, isNotEmpty, hasNoTargetId, isNotFull } from '../conditions';
 import { pickupEnergyFromContainer, pickupEnergyFromTombstone, pickupResource, setPickupResourceIdFromContainer, setPickupResourceIdFromDroppedResources, setPickupResourceIdFromTombstone } from '../actions/pickupResource';
-import { setTargetIdForExtensionOrSpawnOrTower, transferEnergyToTarget } from '../actions/transferResource';
+import { setTargetIdForExtensionOrSpawnOrTower, setTargetIdForStorage, transferEnergyToTarget } from '../actions/transferResource';
 import { consoleLogTest } from '../actions/debug';
 import { clearResourceIdIfSet, clearTargetIdIfSet } from '../actions/utils';
 
@@ -38,16 +38,21 @@ export const moverBT: Node = Selector(
     hasNoTargetId,
     setTargetIdForExtensionOrSpawnOrTower,
     clearResourceIdIfSet,
-    Selector(
-      transferEnergyToTarget
-    )
+    transferEnergyToTarget
   ),
   Sequence(
     isNotEmpty,
     hasTargetId,
-    Selector(
-      transferEnergyToTarget
-    )
-  )
+    transferEnergyToTarget
+  ),
+
+  // Sequence(
+  //   isNotEmpty,
+  //   hasNoTargetId,
+  //   hasNoResourceId,
+  //   setTargetIdForStorage,
+  //   transferEnergyToTarget
+  // )
+
 );
 

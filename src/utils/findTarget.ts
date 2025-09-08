@@ -45,20 +45,29 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
   }
   if (storage instanceof ConstructionSite) {
     if (creep.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
   if (storage instanceof Resource) {
-    creep.memory.targetId = undefined
-    creep.memory.resourceId = undefined
+    if (creep.memory.role != "builder") {
+      creep.memory.targetId = undefined
+    } else {
+      creep.memory.resourceId = undefined
+    }
     return;
   }
   if (storage instanceof Tombstone) {
     if (storage.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
