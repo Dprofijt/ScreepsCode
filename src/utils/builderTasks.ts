@@ -1,3 +1,4 @@
+import { MAXHEALTHWALLSANDRAMPARTS } from "../config";
 import { TaskCategory, TaskPriority } from "../enums/tasksEnums";
 
 export function createTasks() {
@@ -23,7 +24,12 @@ export function createTasks() {
   halfDecayedStructures.forEach(structure => {
     var quartpercentage = (structure.hitsMax / 4)
     let priority;
-    if (structure.hits > structure.hitsMax - (quartpercentage * 2)) {
+    if (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART) { //|| structure.structureType === STRUCTURE_RAMPART
+      if (structure.hits >= MAXHEALTHWALLSANDRAMPARTS) {
+        return;
+      }
+      priority = TaskPriority.Low
+    } else if (structure.hits > structure.hitsMax - (quartpercentage * 2)) {
       priority = TaskPriority.Low
 
     } else if (structure.hits <= structure.hitsMax - (quartpercentage * 2) && structure.hits > structure.hitsMax - (quartpercentage * 3)) {
@@ -55,10 +61,10 @@ export function rebalanceTasks() {
   const builders = Object.values(Game.creeps).filter(c => c.memory.role === "builder");
 
   for (const creep of builders) {
-    const currentTask = Memory.buildTasks.find(task => task.targetId == creep.memory.targetId)
+    const currentTask = Memory.buildTasks.find(task => task.assignedCreepNames.includes(creep.name))
     if (!currentTask) {
       let unassignedTask = tasks.find(task => !task.assignedCreepNames || task.assignedCreepNames.length === 0);
-      console.log("unassigned task")
+      // console.log("unassigned task")
       if (!unassignedTask) {
         unassignedTask = tasks
           .sort((a, b) => b.priority - a.priority)
@@ -100,6 +106,10 @@ export function rebalanceTasks() {
 
 
 function createTask(type: TaskCategory, targetId: Id<any>, priority: TaskPriority, structureType?: string, pos?: RoomPosition) {
+  if (structureType === STRUCTURE_WALL || structureType === STRUCTURE_RAMPART) {
+    priority = TaskPriority.Low
+  }
+
   var task: Task = {
     id: `${Game.time}-${Math.random().toString(36).substr(2, 5)}`,
     type: type,

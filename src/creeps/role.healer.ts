@@ -1,29 +1,14 @@
+import { healerBT } from "../bt/trees/healerBT";
+
 export const roleHealer = {
   run(creep: Creep) {
     creep.say('HAIL DANNY!');
     //goToRoomPF(creep, "W45S3", 11, 27);
     //visitFriend(creep, 'W45S3', 11, 27)
-    const injuredCreeps = creep.room.find(FIND_MY_CREEPS, {
-      filter: (c) => c.hits < c.hitsMax
-    });
+    healerBT(creep);
 
-    if (injuredCreeps.length > 0) {
-      const target = creep.pos.findClosestByPath(injuredCreeps);
-      if (target) {
-        if (creep.heal(target) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(target, { visualizePathStyle: { stroke: '#00ff00' } });
-        }
-        creep.say('💉 heal')
-      } else {
-        const flag = Game.flags.IdleSpot;
-        if (flag) creep.moveTo(flag.pos, { visualizePathStyle: { stroke: '#ffffff' } });
-        creep.say('🛡️ idle');
-      }
-    } else {
-      const flag = Game.flags.IdleSpot;
-      if (flag) creep.moveTo(flag.pos, { visualizePathStyle: { stroke: '#ffffff' } });
-      creep.say('🛡️ idle');
-    }
+    // Save current hits for next tick
+    creep.memory.lastHits = creep.hits;
   }
 };
 

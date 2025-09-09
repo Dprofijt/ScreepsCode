@@ -1,8 +1,8 @@
 export function findFilledResourceStorage(creep: Creep): void {
   var storages = creep.room.find(FIND_STRUCTURES, {
-    filter: (structure): structure is StructureContainer => {
+    filter: (structure): structure is (StructureContainer | StructureStorage) => {
       return (
-        structure.structureType === STRUCTURE_CONTAINER) &&
+        structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
     }
   });
@@ -12,9 +12,9 @@ export function findFilledResourceStorage(creep: Creep): void {
       target = undefined;
     } else {
       target = creep.pos.findClosestByPath(storages, {
-        filter: (structure): structure is StructureContainer => {
+        filter: (structure): structure is (StructureContainer | StructureStorage) => {
           return (
-            structure.structureType === STRUCTURE_CONTAINER) &&
+            structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
             structure.store[RESOURCE_ENERGY] >= 500;
         }
       }) as StructureContainer
@@ -31,7 +31,7 @@ export function findFilledResourceStorage(creep: Creep): void {
       creep.memory.targetId = target.id;
     }
     if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+      creep.moveTo(target/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     }
   }
 }
@@ -45,18 +45,29 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
   }
   if (storage instanceof ConstructionSite) {
     if (creep.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
   if (storage instanceof Resource) {
+    if (creep.memory.role != "builder") {
+      creep.memory.targetId = undefined
+    } else {
+      creep.memory.resourceId = undefined
+    }
     return;
   }
   if (storage instanceof Tombstone) {
     if (storage.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
@@ -88,6 +99,6 @@ export function findStorageToStoreResource(creep: Creep) {
   const target = creep.pos.findClosestByPath(targets) as StructureContainer
 
   if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#dcdf2fff' } });
+    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#dcdf2fff' } }*/);
   }
 }
