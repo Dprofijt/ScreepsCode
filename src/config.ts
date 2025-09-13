@@ -1,5 +1,5 @@
 export const MAXHARVESTERS = 3;
-export const MAXBUILDERS = 2;
+export const MAXBUILDERS = 3;
 export const MAXMOVERS = 2;
 export const MAXUPGRADERS = 1;
 

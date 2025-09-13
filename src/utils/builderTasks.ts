@@ -25,10 +25,11 @@ export function createTasks() {
     var quartpercentage = (structure.hitsMax / 4)
     let priority;
     if (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART) { //|| structure.structureType === STRUCTURE_RAMPART
-      if (structure.hits >= MAXHEALTHWALLSANDRAMPARTS) {
-        return;
+      if (structure.hits <= MAXHEALTHWALLSANDRAMPARTS) {
+        priority = TaskPriority.Medium
+      } else {
+        priority = TaskPriority.Low
       }
-      priority = TaskPriority.Low
     } else if (structure.hits > structure.hitsMax - (quartpercentage * 2)) {
       priority = TaskPriority.Low
 
@@ -44,8 +45,8 @@ export function createTasks() {
     if (!existing) {
       console.log("adding task" + task.id + "with priority:" + task.priority)
       Memory.buildTasks.push(task);
-    } else if (priority > existing.priority) {
-      // task exists but priority is lower → upgrade it
+    } else if (priority != existing.priority) {
+      // task exists but priority is not the same → change it
       existing.priority = priority;
     }
   });
@@ -106,9 +107,6 @@ export function rebalanceTasks() {
 
 
 function createTask(type: TaskCategory, targetId: Id<any>, priority: TaskPriority, structureType?: string, pos?: RoomPosition) {
-  if (structureType === STRUCTURE_WALL || structureType === STRUCTURE_RAMPART) {
-    priority = TaskPriority.Low
-  }
 
   var task: Task = {
     id: `${Game.time}-${Math.random().toString(36).substr(2, 5)}`,

@@ -33,20 +33,27 @@ export const roleHarvester = {
           }
         }
       } else if (creep.memory.targetId === 'source3') {
+        const mineral = creep.room.find(FIND_MINERALS)[0];
 
-        const neighborRoom = "W47S3"; // hardcoded neighbor room name
-        const targetPos = new RoomPosition(25, 25, neighborRoom); // roughly center of the room
-
-        if (creep.room.name !== neighborRoom) {
-          // Move to center of neighbor room
-          creep.moveTo(targetPos/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
+        if (mineral && mineral.mineralAmount > 0) {
+          if (creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(mineral, { swampCost: 30, plainCost: 1 });
+          }
         } else {
-          // In neighbor room, harvest first source
-          const neighborSources = creep.room.find(FIND_SOURCES);
-          if (neighborSources.length > 0) {
-            const source = neighborSources[0];
-            if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-              creep.moveTo(source/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
+          const neighborRoom = "W47S3"; // hardcoded neighbor room name
+          const targetPos = new RoomPosition(25, 25, neighborRoom); // roughly center of the room
+
+          if (creep.room.name !== neighborRoom) {
+            // Move to center of neighbor room
+            creep.moveTo(targetPos/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
+          } else {
+            // In neighbor room, harvest first source
+            const neighborSources = creep.room.find(FIND_SOURCES);
+            if (neighborSources.length > 0) {
+              const source = neighborSources[0];
+              if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+                creep.moveTo(source/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
+              }
             }
           }
         }
