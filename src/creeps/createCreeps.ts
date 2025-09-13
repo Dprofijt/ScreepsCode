@@ -75,7 +75,7 @@ function createDefaultCreeps() {
 
   if (movers.length < MAXMOVERS) {
     {
-      Game.spawns["Spawn1"].spawnCreep([WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], 'Mover' + Game.time, { memory: { role: RoleEnum.MOVER } });
+      Game.spawns["Spawn1"].spawnCreep([WORK, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], 'Mover' + Game.time, { memory: { role: RoleEnum.MOVER } });
     }
   }
   //createBackupCreeps(movers, "mover")

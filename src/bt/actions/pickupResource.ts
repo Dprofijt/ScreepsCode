@@ -23,25 +23,22 @@ export const pickupResource = (creep: Creep): Status => {
     creep.memory.resourceId = undefined;
     return 'FAILURE';
   }
-  const result = creep.pickup(resource);
-  if (result === ERR_NOT_IN_RANGE) {
-    creep.moveTo(resource);
+  if (creep.pickup(resource) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(resource/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     return 'RUNNING';
-  } else if (result === OK) {
-    creep.memory.resourceId = undefined;
-    return 'SUCCESS';
   }
   return 'FAILURE'
 }
 
 export const setPickupResourceIdFromTombstone = (creep: Creep): Status => {
   const tombstones = creep.room.find(FIND_TOMBSTONES, {
-    filter: (s) => storeTotal(s.store) > 0
+    filter: (s): s is Tombstone =>
+      s.store[RESOURCE_ENERGY] > 0
   });
 
   if (tombstones.length > 0) {
     const tombstone = creep.pos.findClosestByPath(tombstones) as Tombstone
-    creep.memory.resourceId = tombstone.id;
+    creep.memory.resourceId = tombstones[0].id;
     return 'SUCCESS';
   }
   return 'FAILURE';
@@ -50,24 +47,21 @@ export const setPickupResourceIdFromTombstone = (creep: Creep): Status => {
 export const pickupEnergyFromTombstone = (creep: Creep): Status => {
   if (!creep.memory.resourceId) return 'FAILURE';
   const tombstone = Game.getObjectById(creep.memory.resourceId) as Tombstone;
-  if (!tombstone || storeTotal(tombstone.store) === 0) {
+  if (!tombstone || tombstone.store[RESOURCE_ENERGY] === 0) {
     creep.memory.resourceId = undefined;
     return 'FAILURE';
   }
-  for (const resourceType in tombstone.store) {
-    if (tombstone.store[resourceType as ResourceConstant]! > 0) {
-      if (creep.withdraw(tombstone, resourceType as ResourceConstant) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(tombstone);
-        return 'RUNNING';
-      } else {
-        creep.memory.resourceId = undefined;
-        return 'SUCCESS';
-      }
-    }
+  if (creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(tombstone/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
+    return 'RUNNING';
   }
-
-  creep.memory.resourceId = undefined;
-  return 'FAILURE';
+  if (tombstone.store[RESOURCE_ENERGY] === 0) {
+    creep.memory.resourceId = undefined;
+    return 'FAILURE'
+  } else {
+    creep.memory.resourceId = undefined;
+    return 'FAILURE';
+  }
 }
 
 export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
@@ -112,10 +106,3 @@ export const pickupEnergyFromContainer = (creep: Creep): Status => {
   return 'FAILURE';
 }
 
-function storeTotal(store: StoreDefinition): number {
-  let total = 0;
-  for (const resourceType in store) {
-    total += store[resourceType as ResourceConstant] || 0;
-  }
-  return total;
-}
