@@ -16,39 +16,63 @@ export const setTargetIdForExtensionOrSpawnOrTower = (creep: Creep): Status => {
 };
 
 export const setTargetIdForStorage = (creep: Creep): Status => {
-  const target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-    filter: (s) =>
-      (s.structureType === STRUCTURE_STORAGE) && s.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY]
-  })
+  const resourceType = getFirstCarriedResource(creep);
+  if (!resourceType) return 'FAILURE';
+
+  const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    filter: (s): s is StructureStorage =>
+      s.structureType === STRUCTURE_STORAGE &&
+      s.store.getFreeCapacity(resourceType) >= creep.store[resourceType]
+  });
 
   if (target) {
     creep.memory.targetId = target.id;
-    return 'SUCCESS'
+    return 'SUCCESS';
   }
-  return 'FAILURE'
+  return 'FAILURE';
+};
 
-}
 
-export const transferEnergyToTarget = (creep: Creep): Status => {
+export const transferToTarget = (creep: Creep): Status => {
   if (!creep.memory.targetId) return 'FAILURE';
-  const target = Game.getObjectById(creep.memory.targetId) as StructureExtension | StructureSpawn | StructureTower | StructureStorage;
+  const target = Game.getObjectById(creep.memory.targetId) as AnyStoreStructure | null;
   if (!target) {
     creep.memory.targetId = undefined;
     return 'FAILURE';
   }
-  if (creep.store[RESOURCE_ENERGY] == 0) {
+
+  const resourceType = getFirstCarriedResource(creep);
+  if (!resourceType) {
     creep.memory.targetId = undefined;
-    return 'SUCCESS'
+    return 'SUCCESS'; // creep is empty
   }
-  if (target.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-    creep.memory.targetId = undefined
-    return 'FAILURE'
+
+  if (target.store.getFreeCapacity(resourceType) === 0) {
+    creep.memory.targetId = undefined;
+    return 'FAILURE';
   }
-  if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target/*, { visualizePathStyle: { stroke: '#52a9e2ff' } }*/)
-    return 'RUNNING'
+
+  const result = creep.transfer(target, resourceType);
+  if (result === ERR_NOT_IN_RANGE) {
+    creep.moveTo(target);
+    return 'RUNNING';
+  } else if (result === OK) {
+    if (creep.store[resourceType] === 0) {
+      creep.memory.targetId = undefined; // resource delivered
+    }
+    return 'SUCCESS';
   }
+
   return 'FAILURE';
+};
+
+
+
+function getFirstCarriedResource(creep: Creep): ResourceConstant | null {
+  for (const resourceType in creep.store) {
+    if (creep.store[resourceType as ResourceConstant]! > 0) {
+      return resourceType as ResourceConstant;
+    }
+  }
+  return null;
 }
-
-
