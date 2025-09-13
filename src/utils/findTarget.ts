@@ -1,8 +1,8 @@
 export function findFilledResourceStorage(creep: Creep): void {
   var storages = creep.room.find(FIND_STRUCTURES, {
-    filter: (structure): structure is StructureContainer => {
+    filter: (structure): structure is (StructureContainer | StructureStorage) => {
       return (
-        structure.structureType === STRUCTURE_CONTAINER) &&
+        structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
         structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
     }
   });
@@ -12,9 +12,9 @@ export function findFilledResourceStorage(creep: Creep): void {
       target = undefined;
     } else {
       target = creep.pos.findClosestByPath(storages, {
-        filter: (structure): structure is StructureContainer => {
+        filter: (structure): structure is (StructureContainer | StructureStorage) => {
           return (
-            structure.structureType === STRUCTURE_CONTAINER) &&
+            structure.structureType === STRUCTURE_CONTAINER || structure.structureType === STRUCTURE_STORAGE) &&
             structure.store[RESOURCE_ENERGY] >= 500;
         }
       }) as StructureContainer
@@ -31,7 +31,7 @@ export function findFilledResourceStorage(creep: Creep): void {
       creep.memory.targetId = target.id;
     }
     if (creep.withdraw(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(target, { visualizePathStyle: { stroke: '#f3fc7cff' } });
+      creep.moveTo(target/*/*, { visualizePathStyle: { stroke: '#f3fc7cff' } } */);
     }
   }
 }
@@ -45,18 +45,29 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
   }
   if (storage instanceof ConstructionSite) {
     if (creep.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
   if (storage instanceof Resource) {
+    if (creep.memory.role != "builder") {
+      creep.memory.targetId = undefined
+    } else {
+      creep.memory.resourceId = undefined
+    }
     return;
   }
   if (storage instanceof Tombstone) {
     if (storage.store[RESOURCE_ENERGY] === 0) {
-      creep.memory.targetId = undefined
-      creep.memory.resourceId = undefined
+      if (creep.memory.role != "builder") {
+        creep.memory.targetId = undefined
+      } else {
+        creep.memory.resourceId = undefined
+      }
     }
     return;
   }
@@ -77,17 +88,35 @@ export function clearTargetIdIfStorageIsEmpty(creep: Creep) {
 }
 
 export function findStorageToStoreResource(creep: Creep) {
-  var targets = creep.room.find(FIND_STRUCTURES, {
-    filter: (structure) => {
-      return (
-        structure.structureType === STRUCTURE_CONTAINER
-        || structure.structureType === STRUCTURE_STORAGE)
-        && structure.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.store[RESOURCE_ENERGY];
-    }
-  });
-  const target = creep.pos.findClosestByPath(targets) as StructureContainer
+  for (const resourceType in creep.store) {
+    if (creep.store[resourceType as ResourceConstant] > 0) {
+      let targets: (StructureContainer | StructureStorage | StructureTerminal)[] = [];
 
-  if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(target, { visualizePathStyle: { stroke: '#dcdf2fff' } });
+      if (resourceType === RESOURCE_ENERGY) {
+        // Energy only goes to Storage or Containers
+        targets = creep.room.find(FIND_STRUCTURES, {
+          filter: (structure) =>
+            (structure.structureType === STRUCTURE_CONTAINER ||
+              structure.structureType === STRUCTURE_STORAGE) &&
+            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+        }) as (StructureContainer | StructureStorage)[];
+      } else {
+        // Non-energy (minerals, compounds, etc.) can also go into Terminals
+        targets = creep.room.find(FIND_STRUCTURES, {
+          filter: (structure) =>
+            (structure.structureType === STRUCTURE_CONTAINER ||
+              structure.structureType === STRUCTURE_STORAGE ||
+              structure.structureType === STRUCTURE_TERMINAL) &&
+            structure.store.getFreeCapacity(resourceType as ResourceConstant) > 0
+        }) as (StructureContainer | StructureStorage | StructureTerminal)[];
+      }
+      if (targets.length > 0) {
+        const target = creep.pos.findClosestByPath(targets) as StructureContainer | StructureStorage | StructureTerminal;
+        if (creep.transfer(target, resourceType as ResourceConstant) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(target/*, { visualizePathStyle: { stroke: '#dcdf2fff' } }*/);
+        }
+        return; // Only handle one resource type per tick
+      }
+    }
   }
 }

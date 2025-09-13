@@ -70,6 +70,9 @@ export class Main {
         for (const tower of towers) {
             buildingTower.run(tower)
         }
+        if (Game.cpu.bucket >= 9500) {
+            Game.cpu.generatePixel();
+        }
     }
 }
 
