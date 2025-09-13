@@ -67,7 +67,8 @@ export const pickupEnergyFromTombstone = (creep: Creep): Status => {
 export const setPickupResourceIdFromContainer = (creep: Creep): Status => {
   const containers = creep.room.find(FIND_STRUCTURES, {
     filter: (s): s is StructureContainer => (
-      s.structureType === STRUCTURE_CONTAINER)
+      s.structureType === STRUCTURE_CONTAINER
+      || s.structureType === STRUCTURE_STORAGE)
       && s.store[RESOURCE_ENERGY] > 0
   }).sort((a, b) => b.store[RESOURCE_ENERGY] - a.store[RESOURCE_ENERGY]);
   if (containers.length > 0) {
