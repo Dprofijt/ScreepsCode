@@ -35,7 +35,7 @@ export const roleHarvester = {
       } else if (creep.memory.targetId === 'source3') {
         const mineral = creep.room.find(FIND_MINERALS)[0];
 
-        if (mineral && mineral.mineralAmount > 0) {
+        if (mineral && mineral.mineralAmount > 0 && creep.room.name === 'W46S3') {
           if (creep.harvest(mineral) === ERR_NOT_IN_RANGE) {
             creep.moveTo(mineral, { swampCost: 30, plainCost: 1 });
           }

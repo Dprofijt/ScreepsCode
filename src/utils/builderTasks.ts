@@ -86,7 +86,7 @@ export function rebalanceTasks() {
     const highestTask = tasks.find(task => {
       task.assignedCreepNames = task.assignedCreepNames ?? [];
       const assignedCount = task.assignedCreepNames.length;
-      return task !== currentTask && (task.priority > (currentTask?.priority ?? 0) || assignedCount === 0);
+      return task !== currentTask && (task.priority > (currentTask?.priority ?? 0) && assignedCount === 0);
     });
 
     if (!highestTask || !currentTask) continue;
