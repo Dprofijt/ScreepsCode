@@ -12,6 +12,18 @@ export const creepCreater = {
 
 function createCombatCreeps() {
 
+  const friendlyWithDamage = Game.rooms['W46S3'].find(FIND_MY_CREEPS).filter(
+    creep => creep.hits != creep.hitsMax
+  )
+  if (friendlyWithDamage.length != 0) {
+    const healers = Game.rooms['W46S3'].find(FIND_MY_CREEPS).filter(
+      creep => creep.memory.role === RoleEnum.HEALER
+    )
+    if (healers.length === 0) {
+      Game.spawns["Spawn1"].spawnCreep([TOUGH, HEAL, HEAL, HEAL, MOVE, MOVE, MOVE], 'Healer' + Game.time, { memory: { role: RoleEnum.HEALER } });
+    }
+
+  }
   //if enemies are present, spawn combat creeps
   // This is a simple example; you might want to implement more complex logic
   const hostiles = Game.rooms['W46S3'].find(FIND_HOSTILE_CREEPS);

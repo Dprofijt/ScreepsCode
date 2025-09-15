@@ -13,3 +13,4 @@ export const clearResourceIdIfSet = (creep: Creep): Status => {
   }
   return 'SUCCESS'
 }
+

@@ -2,7 +2,7 @@ import { healerBT } from "../bt/trees/healerBT";
 
 export const roleHealer = {
   run(creep: Creep) {
-    creep.say('HAIL DANNY!');
+    // creep.say('HAIL DANNY!');
     //goToRoomPF(creep, "W45S3", 11, 27);
     //visitFriend(creep, 'W45S3', 11, 27)
     healerBT(creep);

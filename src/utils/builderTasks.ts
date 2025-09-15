@@ -25,10 +25,16 @@ export function createTasks() {
     var quartpercentage = (structure.hitsMax / 4)
     let priority;
     if (structure.structureType === STRUCTURE_WALL || structure.structureType === STRUCTURE_RAMPART) { //|| structure.structureType === STRUCTURE_RAMPART
-      if (structure.hits <= MAXHEALTHWALLSANDRAMPARTS) {
+      if (structure.hits <= MAXHEALTHWALLSANDRAMPARTS / 2) {
         priority = TaskPriority.Medium
-      } else {
+      } else if (structure.hits <= MAXHEALTHWALLSANDRAMPARTS) {
         priority = TaskPriority.Low
+      } else {
+        const existing = Memory.buildTasks.find(t => t.targetId === structure.id);
+        if (existing) {
+          Memory.buildTasks = Memory.buildTasks.filter(task => !task.targetId)
+        }
+        return;
       }
     } else if (structure.hits > structure.hitsMax - (quartpercentage * 2)) {
       priority = TaskPriority.Low

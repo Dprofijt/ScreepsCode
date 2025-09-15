@@ -4,6 +4,7 @@ import { pickupEnergyFromContainer, pickupEnergyFromTombstone, pickupResource, s
 import { setTargetIdForExtensionOrSpawnOrTower, setTargetIdForStorage, transferEnergyToTarget } from '../actions/transferResource';
 import { consoleLogTest } from '../actions/debug';
 import { clearResourceIdIfSet, clearTargetIdIfSet } from '../actions/utils';
+import { findStorageToStoreResource } from '../../utils/findTarget';
 
 
 export const moverBT: Node = Selector(
@@ -37,6 +38,13 @@ export const moverBT: Node = Selector(
     isNotEmpty,
     hasNoTargetId,
     setTargetIdForExtensionOrSpawnOrTower,
+    clearResourceIdIfSet,
+    transferEnergyToTarget
+  ),
+  Sequence(
+    isNotEmpty,
+    hasNoTargetId,
+    setTargetIdForStorage,
     clearResourceIdIfSet,
     transferEnergyToTarget
   ),

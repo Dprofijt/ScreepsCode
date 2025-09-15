@@ -1,7 +1,7 @@
 import { Selector, Sequence, Node } from '../core';
 import { attackClosestEnemy, chaseClosestEnemy } from '../actions/attack';
 import { healSelf } from '../actions/heal';
-import { moveToRally, retreat } from '../actions/move';
+import { moveToIdleSpot, moveToRally, retreat } from '../actions/move';
 import { lowHP, isUnderAttack } from '../conditions';
 
 /**
@@ -22,5 +22,6 @@ export const meleeBT: Node = Selector(
   attackClosestEnemy,
   chaseClosestEnemy,
   healSelf,
-  moveToRally
+  moveToRally,
+  moveToIdleSpot
 );

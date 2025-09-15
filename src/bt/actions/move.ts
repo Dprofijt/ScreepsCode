@@ -18,6 +18,12 @@ export const moveToRally = (creep: Creep): Status => {
   return moveTo(creep, flag);
 };
 
+export const moveToIdleSpot = (creep: Creep): Status => {
+  const flag = Game.flags['IdleSpot'];
+  if (!flag) return 'FAILURE';
+  return moveTo(creep, flag);
+}
+
 /**
  * Retreat away from hostiles using PathFinder.flee.
  * @param creep The creep to retreat
